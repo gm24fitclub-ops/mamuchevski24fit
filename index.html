@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mamuchevski24fit | Wellness Performance Analysis</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background:
+      radial-gradient(circle at top left, rgba(66,160,70,0.12), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(38,100,49,0.1), transparent 30%),
+      linear-gradient(180deg,#f7faf8,#eef4ef);
+      color: #111;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --primary:#266431;
+      --secondary:#42a046;
+      --light:#f5f7f6;
+      --border:#e5e7eb;
+      --gray:#6b7280;
+    }
+
+    .wrapper {
+      width: 92%;
+      max-width: 760px;
+      margin: 40px auto;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+      border-radius: 38px;
+      margin-bottom: 30px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      color: var(--gray);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .quiz-box {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(22px);
+      border-radius: 42px;
+      padding: 46px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      background: #edf0ee;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg,var(--primary),var(--secondary));
+      transition: 0.4s;
+    }
+
+    .step {
+      display: none;
+      animation: fade 0.4s ease;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: var(--gray);
+      margin-bottom: 34px;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: 0.35s;
+      font-weight: 700;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+    }
+
+    .card:hover,
+    .card.selected {
+      background: linear-gradient(135deg,var(--primary),var(--secondary));
+      color: white;
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 45px rgba(38,100,49,0.22);
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(0,0,0,0.08);
+      font-size: 1rem;
+      font-family: inherit;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    button {
+      border: none;
+      padding: 18px 28px;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+    }
+
+    .next-btn,
+    .submit-btn {
+      background: linear-gradient(135deg,var(--primary),var(--secondary));
+      color: white;
+      flex: 1;
+      box-shadow: 0 18px 40px rgba(38,100,49,0.22);
+    }
+
+    .back-btn {
+      background: #edf0ee;
+      color: #111;
+      width: 140px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .final-screen {
+      text-align: center;
+      display: none;
+    }
+
+    .final-screen h2 {
+      font-size: 2.5rem;
+      margin-bottom: 18px;
+    }
+
+    .final-screen p {
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .contact-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      text-decoration: none;
+      color: #111;
+      transition: 0.3s;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    }
+
+    .contact-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .calendly-box {
+      margin-top: 32px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+    }
+
+    @media(max-width:768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .quiz-box {
+        padding: 26px;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .back-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="hero">
+
+    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1400&auto=format&fit=crop" alt="Healthy Lifestyle Nutrition">
+
+    <h1>Transformation Qualification System</h1>
+
+    <p>
+      Откриј што навистина те кочи и дали си добар fit за нашиот premium wellness transformation system.
+    </p>
+
+  </div>
+
+  <div class="quiz-box">
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <form id="quizForm">
+
+      <div class="step active">
+        <h2>Ако продолжиш вака уште 12 месеци… што најмногу те плаши?</h2>
+        <p class="subtitle">Одговори искрено. Ова не е само за килограми — туку за енергија, самодоверба и lifestyle.</p>
+
+        <div class="cards selectable">
+          <div class="card">⚠️ Да продолжам да се чувствувам уморно и без енергија</div>
+          <div class="card">👕 Да не се чувствувам добро во своето тело</div>
+          <div class="card">📉 Да продолжам да почнувам и да се откажувам</div>
+          <div class="card">😔 Да изгубам уште повеќе самодоверба</div>
+          <div class="card">⏳ Да поминат години без вистинска промена</div>
+          <div class="card">🔥 Искрено — доста ми е од истата ситуација</div>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="next-btn">Продолжи</button>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Како изгледа твојата реалност во моментов?</h2>
+        <p class="subtitle">Овие прашања ни покажуваат каде најмногу ти паѓа енергијата и структурата.</p>
+
+        <div class="field">
+          <label>Како изгледа твојот типичен појадок?</label>
+
+          <div class="cards selectable">
+            <div class="card">☕ Само кафе</div>
+            <div class="card">🥐 Брзо пециво / благо</div>
+            <div class="card">❌ Не појадувам</div>
+            <div class="card">🍳 Протеински / структуриран појадок</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Кој оброк најчесто го прескокнуваш?</label>
+
+          <div class="cards selectable">
+            <div class="card">🌅 Појадок</div>
+            <div class="card">☀ Ручек</div>
+            <div class="card">🌙 Вечера</div>
+            <div class="card">🤷 Немам структура со оброци</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Кога најчесто губиш контрола со храна?</label>
+
+          <div class="cards selectable">
+            <div class="card">🌙 Навечер</div>
+            <div class="card">🤯 Под стрес</div>
+            <div class="card">🏢 После работа</div>
+            <div class="card">🍫 После благо / cheat meal</div>
+            <div class="card">😴 Кога сум уморен/на</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Како ти е енергијата преку ден?</label>
+
+          <div class="cards selectable">
+            <div class="card">⚡ Имам стабилна енергија</div>
+            <div class="card">😴 Ми се спие после ручек</div>
+            <div class="card">☕ Живеам на кафе</div>
+            <div class="card">📉 Имам energy crash навечер</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Колку вода пиеш дневно?</label>
+
+          <div class="cards selectable">
+            <div class="card">💧 Помалку од 1L</div>
+            <div class="card">💧 1-2L</div>
+            <div class="card">💧 2-3L</div>
+            <div class="card">💧 3L+</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Колку често купуваш нешто „на брзина“ во текот на денот?</label>
+
+          <div class="cards selectable">
+            <div class="card">☕ Кафе</div>
+            <div class="card">🥐 Пециво / сендвич</div>
+            <div class="card">🍫 Благо / snacks</div>
+            <div class="card">🥤 Сок / енергетски пијалок</div>
+            <div class="card">🚫 Скоро никогаш</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Колку мислиш дека трошиш дневно на кафе, snacks и брзи оброци?</label>
+
+          <div class="cards selectable">
+            <div class="card">💸 Под 150 ден</div>
+            <div class="card">💸 150-300 ден</div>
+            <div class="card">💸 300-500 ден</div>
+            <div class="card">💸 500+ ден</div>
+          </div>
+        </div>
+
+        <div style="margin-top:34px;padding:28px;border-radius:30px;background:linear-gradient(135deg,#266431,#42a046);color:white;box-shadow:0 20px 50px rgba(38,100,49,0.22);">
+
+          <h3 style="font-size:1.5rem;margin-bottom:18px;line-height:1.3;">
+            Најчесто проблемот не е само храната…
+          </h3>
+
+          <p style="opacity:0.92;line-height:1.8;margin-bottom:24px;">
+            Туку cycle-от што создава пад на енергија, cravings и хаотични навики.
+          </p>
+
+          <div style="display:grid;gap:14px;">
+
+            <div style="background:rgba(255,255,255,0.12);padding:16px 18px;border-radius:18px;">
+              ☕ Утро → кафе + благо / брз појадок
+            </div>
+
+            <div style="background:rgba(255,255,255,0.12);padding:16px 18px;border-radius:18px;">
+              📉 Попладне → пад на енергија и фокус
+            </div>
+
+            <div style="background:rgba(255,255,255,0.12);padding:16px 18px;border-radius:18px;">
+              🍫 Навечер → cravings и прејадување
+            </div>
+
+            <div style="background:rgba(255,255,255,0.12);padding:16px 18px;border-radius:18px;">
+              🔁 Следен ден → истиот циклус повторно
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="field" style="margin-top:34px;">
+          <label>Дали ова ти звучи познато?</label>
+
+          <div class="cards selectable">
+            <div class="card">☕ Почнувам ден со кафе</div>
+            <div class="card">😴 Ми паѓа енергијата преку ден</div>
+            <div class="card">🍫 Барам благо навечер</div>
+            <div class="card">🤯 Јадам хаотично</div>
+            <div class="card">📉 Почнувам и се откажувам</div>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="back-btn">Назад</button>
+          <button type="button" class="next-btn">Продолжи</button>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Што мислиш дека најмногу те кочи да имаш резултати?</h2>
+        <p class="subtitle">Кај повеќето луѓе проблемот не е мотивацијата — туку системот и навиките.</p>
+
+        <div class="cards selectable">
+          <div class="card">🕒 Немам структура и време</div>
+          <div class="card">🍫 Имам cravings и хаотична исхрана</div>
+          <div class="card">😴 Ниска енергија преку ден</div>
+          <div class="card">🤯 Стрес и emotional eating</div>
+          <div class="card">📉 Почнувам силно и брзо се откажувам</div>
+          <div class="card">🙅 Немам support/accountability</div>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="back-btn">Назад</button>
+          <button type="button" class="next-btn">Продолжи</button>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Замисли дека конечно имаш систем што функционира за тебе… што би се променило?</h2>
+        <p class="subtitle">Ова е најважниот дел. Тука гледаме дали навистина си спремен/на за промена.</p>
+
+        <div class="field">
+          <label>Како би изгледал твојот живот ако имаш повеќе енергија, подобро тело и подобри навики?</label>
+          <textarea rows="5" placeholder="Опиши како би сакал/а да се чувствуваш..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Зошто токму сега сакаш да направиш промена?</label>
+          <textarea rows="5" placeholder="Што те натера да стигнеш до оваа анализа?"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Колку сериозно си спремен/на да вложиш во себе во следните 90 дена?</label>
+          <select>
+            <option>Избери...</option>
+            <option>Само разгледувам</option>
+            <option>Сакам промена, но не сум сигурен/на</option>
+            <option>Спремен/на сум за структура и support</option>
+            <option>Доста ми е — време е за реална трансформација</option>
+          </select>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="back-btn">Назад</button>
+          <button type="button" class="next-btn">Продолжи</button>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>Последен чекор</h2>
+        <p class="subtitle">Кажи ни како најлесно да те контактираме.</p>
+
+        <div class="field">
+          <label>Име и презиме</label>
+          <input type="text" placeholder="Внеси име">
+        </div>
+
+        <div class="field">
+          <label>WhatsApp / Телефон</label>
+          <input type="text" placeholder="07X XXX XXX">
+        </div>
+
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" placeholder="example@gmail.com">
+        </div>
+
+        <div class="field">
+          <label>Instagram username</label>
+          <input type="text" placeholder="@mamuchevski24fit">
+        </div>
+
+        <div class="field">
+          <label>Кое време најмногу ти одговара?</label>
+          <select>
+            <option>Наутро</option>
+            <option>Попладне</option>
+            <option>Навечер</option>
+          </select>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="back-btn">Назад</button>
+          <button type="submit" class="submit-btn">Испрати Анализа</button>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="final-screen" id="finalScreen">
+
+      <h2>Твојата анализа е успешно испратена ✅</h2>
+
+      <p>
+        Следен чекор е кратка Zoom или live wellness консултација каде ќе добиеш personalized strategy.
+      </p>
+
+      <div class="calendly-box">
+
+        <!-- ЗАМЕНИ ГО СО ТВОЈОТ CALENDLY LINK -->
+        <iframe src="https://calendly.com/mamuchevski24/wellness"></iframe>
+
+      </div>
+
+      <div class="contact-grid">
+
+        <a href="https://wa.me/38971691879" class="contact-card" target="_blank">
+          <h3>💬 WhatsApp</h3>
+          <p>Прати порака директно.</p>
+        </a>
+
+        <a href="viber://chat?number=%2B38971691879" class="contact-card">
+          <h3>📲 Viber</h3>
+          <p>Контакт преку Viber.</p>
+        </a>
+
+        <a href="https://t.me/mamuchevski24fit" class="contact-card" target="_blank">
+          <h3>🚀 Telegram</h3>
+          <p>Join community.</p>
+        </a>
+
+        <a href="https://www.instagram.com/mamuchevski24fit/" class="contact-card" target="_blank">
+          <h3>📸 Instagram</h3>
+          <p>Follow & DM.</p>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const steps = document.querySelectorAll('.step');
+const nextBtns = document.querySelectorAll('.next-btn');
+const backBtns = document.querySelectorAll('.back-btn');
+const progressBar = document.getElementById('progressBar');
+const form = document.getElementById('quizForm');
+const finalScreen = document.getElementById('finalScreen');
+
+let currentStep = 0;
+
+function updateProgress() {
+  const progress = ((currentStep + 1) / steps.length) * 100;
+  progressBar.style.width = progress + '%';
+}
+
+nextBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    steps[currentStep].classList.remove('active');
+    currentStep++;
+    steps[currentStep].classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+backBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    steps[currentStep].classList.remove('active');
+    currentStep--;
+    steps[currentStep].classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  form.style.display = 'none';
+  finalScreen.style.display = 'block';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // GOOGLE SHEETS INTEGRATION
+  // Тука подоцна можеш да додадеш Google Apps Script webhook.
+});
+
+updateProgress();
+
+const selectableCards = document.querySelectorAll('.selectable .card');
+
+selectableCards.forEach(card => {
+  card.addEventListener('click', () => {
+    selectableCards.forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  });
+});
+
+</script>
+
+</body>
+</html>
